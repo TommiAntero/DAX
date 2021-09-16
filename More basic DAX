@@ -1,0 +1,20 @@
+Internet Sales
+
+    Sales = SUMX(FactInternetSales; FactInternetSales[UnitPrice]*FactInternetSales[OrderQuantity])
+    use the Sales measurement and filter by children
+    Number of orders = DISTINCTCOUNT(FactInternetSales[SalesOrderNumber])
+    Avg. Sales € per order = DIVIDE([Sales]; [number of orders])
+    Sales € YTD = TOTALYTD([Sales]; Calendar[Date]) https://www.sqlbi.com/blog/marco/2018/08/10/the-hidden-secrets-of-totalytd/
+    Sales € YTD PY = CALCULATE([Sales € YTD];SAMEPERIODLASTYEAR(Calendar[Date]))
+    YTD difference to PY = [Sales € YTD] - [ Sales € YTD PY]
+
+Retailer Sales
+
+    Orders with discount pcs = CALCULATE( DISTINCTCOUNT(FactResellerSales[SalesOrderNumber]); FILTER(FactResellerSales; FactResellerSales[DiscountAmount]>0) )
+    Total Discount = SUM(FactResellerSales[DiscountAmount])
+    use orders with discount and sales territory key filtering
+    Avg discount = DIVIDE([Total discount]; [Orders with discount pcs])
+    Biggest discount € = max(FactResellerSales[DiscountAmount])
+    Product has over 500€ discount = CALCULATE( DISTINCTCOUNT(FactResellerSales[ProductKey]); FILTER(FactResellerSales[DiscountAmount]>500) )
+    Target YTD = TOTALYTD(SUM(FactSalesQuota[SalesAmountQuota]); Calendar[Date])
+    Sales YTD = TOTALYTD(SUM(FactResellerSales[SalesAmount]);Calendar[Date]) Target development = [Sales YTD]-[Target YTD]
