@@ -1,0 +1,16 @@
+MISC
+➢ Add some new columns to Calendar table
+➢ StartOfYear = DATE(YEAR(Calendar[Date]);1;1)
+➢ EndOfYear = ENDOFYEAR(Calendar[Date])
+➢ Sales of Year = 
+CALCULATE([Sales];DATESBETWEEN(Calendar[Date];Min(Calendar[FirstDayOfYear]);Max(Calendar[LastDayOfYear])))
+➢ Sales of Year = 
+VAR D1 = MIN(Calendar[StartOfYear])
+VAR D2 = MAX('Calendar’[EndOfYear])
+VAR Period = DATESBETWEEN(Calendar[Date];D1;D2)
+RETURN CALCULATE([Sales];Period)
+➢ Sales of Year = 
+VAR D1 = STARTOFYEAR(Calendar[Date])
+VAR D2 = ENDOFYEAR(Calendar[Date])
+VAR Period = DATESBETWEEN(Calendar[Date];D1;D2)
+RETURN CALCULATE([Sales];Period)
