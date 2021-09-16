@@ -1,0 +1,14 @@
+
+COLLECTION OF MEASURES
+➢ Orders Amount = DISTINCTCOUNT(Orders[OrderID])
+➢ Orders Quantity = SUM(Orders[Quantity]) Total Sales = CALCULATE([Sales]; ALL(Orders))
+➢ Sales = SUMX(Orders; Orders[Quantity]*Orders[UnitPrice])
+➢ Total Sales = CALCULATE([Sales]; ALL(Orders))
+➢ Share of Total Sales = DIVIDE([Sales];[Total Sales])
+➢ Sales of Finland = CALCULATE([Sales];Customers[Country]="Suomi")
+➢ Share of Finland Sales = DIVIDE([Sales of Finland];[Sales])
+➢ Cumulative Sales = TOTALYTD([Sales];Calendar[Date])
+➢ Cumulative Sales PY = CALCULATE([Cumulative Sales];SAMEPERIODLASTYEAR('Calendar'[Date]))
+➢ Sales PY = CALCULATE([Sales];SAMEPERIODLASTYEAR(Calendar[Date]))
+➢ CountryRanking = RANKX( ALL(Customers[Country]); [Sales])
+➢ ProductGroupRanking:= RANKX( ALLSELECTED(Products[CategoryName]); [Sales])
